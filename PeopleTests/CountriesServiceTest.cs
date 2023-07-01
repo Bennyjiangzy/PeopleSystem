@@ -124,5 +124,35 @@ namespace PeopleTests
             }
         }
         #endregion
+
+        #region GetCountryByCountryID
+        [Fact]
+        // When CountryID is Null, it should return null
+        public void GetCountryByCountryID_NullCountryID() 
+        {
+            Guid countryID = Guid.Empty;
+            CountryResponse? tescountry = _countryService.GetCountryByCountryID(countryID);
+
+            Assert.Null(tescountry);
+        }
+
+        [Fact]
+        // If we supply a valid country id, it should return the matched country as
+        // CountryResponse object
+
+        public void GetCountryByCountryID_CountryID() 
+        {
+            
+            CountryAddRequest? country_fromrequest = new CountryAddRequest() 
+            {
+                CountryName = "Test"
+            };
+            CountryResponse country_fromraddequest = _countryService.AddCountry(country_fromrequest);
+
+            CountryResponse country_fromgetID = _countryService.GetCountryByCountryID(country_fromraddequest.CountryID)!;
+
+            Assert.Equal(country_fromgetID, country_fromraddequest);
+        }
+        #endregion
     }
 }

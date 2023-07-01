@@ -15,5 +15,11 @@ namespace ServiceContracts
         // <return>
         // All countries from the list
         public List<CountryResponse> GetAllCountries();
+
+        // <summary>
+        // Returns countries by CountryID
+        // <return>
+        // Return a CountryResponse object by parameter guid countryID
+        public CountryResponse? GetCountryByCountryID(Guid? countryID);
     }
 }
