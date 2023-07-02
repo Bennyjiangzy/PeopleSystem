@@ -14,7 +14,7 @@ namespace ServiceContracts.DTO
     {
         public Guid PersonID { get; set; }
         public string? PersonName { get; set; }
-        public string? Eamil { get; set; }
+        public string? Email { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public Guid? CountryID { get; set; }
@@ -35,7 +35,7 @@ namespace ServiceContracts.DTO
 
             return PersonID == person.PersonID &&
                    PersonName == person.PersonName &&
-                   Eamil == person.Eamil &&
+                   Email == person.Email &&
                    DateOfBirth == person.DateOfBirth &&
                    Gender == person.Gender &&
                    CountryID == person.CountryID &&
@@ -46,6 +46,14 @@ namespace ServiceContracts.DTO
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Person ID: {PersonID}, Person Name: {PersonName}," +
+                $"Email: {Email}, Date of Birth: {DateOfBirth?.ToString("dd MM yyyy")}," +
+                $"Gender: {Gender}, Country ID: {CountryID}, Country: {Country}," +
+                $"Receive News Letters: {ReceiveNewsLetters}";
         }
     }
 
@@ -61,7 +69,7 @@ namespace ServiceContracts.DTO
             {
                 PersonID = person.PersonID,
                 PersonName = person.PersonName,
-                Eamil = person.Eamil,
+                Email = person.Email,
                 DateOfBirth = person.DateOfBirth,
                 Gender = person.Gender,
                 CountryID = person.CountryID,
