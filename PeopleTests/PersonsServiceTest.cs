@@ -606,5 +606,46 @@ namespace PeopleTests
 
         }
         #endregion
+
+        #region DeletePerson
+
+        [Fact]
+        //valid PersonID, it should return True
+        public void DeletePerson_ValidPersonID() 
+        {
+            CountryAddRequest country_request1 = new CountryAddRequest()
+            {
+                CountryName = "Canada"
+            };
+            CountryResponse country_response1 =
+                _countryService.AddCountry(country_request1);
+            PersonAddRequest request1 = new PersonAddRequest
+            {
+                PersonName = "sample1",
+                Address = "Sample1",
+                DateOfBirth = DateTime.Parse("2000-01-01"),
+                Email = "hello1@eampl.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true,
+                CountryID = country_response1.CountryID
+            };
+            
+            PersonResponse personResponse = _personsService.AddPerson(request1);
+
+            bool isDeleted = _personsService.DeletePerson(personResponse.PersonID);
+
+            Assert.True(isDeleted);
+           
+        }
+
+        [Fact]
+        //Invalid PersonID, it should return False
+        public void DeletePerson_InvalidPersonID()
+        {
+            bool isDeleted = _personsService.DeletePerson(Guid.NewGuid());
+
+            Assert.False(isDeleted);
+        }
+        #endregion
     }
 }
