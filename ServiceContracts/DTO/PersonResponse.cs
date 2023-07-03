@@ -6,10 +6,11 @@ using Emtities;
 namespace ServiceContracts.DTO
 {
 
-    // <summary>
-    // represents DTO class that is used as return type of most methods of Persons service
-    // <return>
-
+    /// <summary>
+    /// represents DTO class that is used as return type of most methods of Persons service
+    /// </summary>
+    /// <return>
+    /// </return>
     public class PersonResponse
     {
         public Guid PersonID { get; set; }
@@ -23,10 +24,10 @@ namespace ServiceContracts.DTO
         public bool ReceiveNewsLetters { get; set; }
         public double? Age { get; set; }
 
-        // <summary>
-        // compare the details with in PersonResponse type of objects
-        // <return>
-        // return true of false based on the matched details
+        /// <summary>
+        /// compare the details with in PersonResponse type of objects</summary>
+        /// <return>
+        /// return true of false based on the matched details</return>
         public override bool Equals(object? obj)
         {
             if (obj == null || !(obj is PersonResponse other)) return false;
@@ -57,10 +58,11 @@ namespace ServiceContracts.DTO
         }
     }
 
-    // <summary>
-    // convert Person type of object to the PersonResponse object
-    // <return>
-    // return the PersonResponse type of object with details from current Person object
+    /// <summary>
+    /// convert Person type of object to the PersonResponse object
+    /// </summary>
+    /// <return>
+    /// return the PersonResponse type of object with details from current Person object</return>
     public static class PersonExtensions 
     {
         public static PersonResponse ToPersonResponse(this Person person) 

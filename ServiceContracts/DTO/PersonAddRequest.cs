@@ -20,10 +20,10 @@ namespace ServiceContracts.DTO
         public string? Address { get; set; }
         public bool ReceiveNewsLetters { get; set; }
 
-        // <summary>
-        // Convert the current object from PersonAddRequest to Person type
-        // <return>
-        // return the Person type object with current object details
+        /// <summary>
+        /// Convert the current object from PersonAddRequest to Person type</summary>
+        /// <return>
+        /// return the Person type object with current object details</return>
         public Person ToPerson() 
         {
             return new Person
