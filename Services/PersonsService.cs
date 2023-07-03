@@ -4,6 +4,7 @@ using Emtities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Services.Helpers;
+using ServiceContracts.Enums;
 
 namespace Services
 {
@@ -126,6 +127,59 @@ namespace Services
             }
 
             return matchingPersons;
+        }
+
+        public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
+        {
+            if (string.IsNullOrEmpty(sortBy)) 
+            {
+                return allPersons;
+            }
+
+            List<PersonResponse> sortedPersons = (sortBy, sortOrder)
+            switch
+            {
+                (nameof(PersonResponse.PersonName),SortOrderOptions.ASC)
+                => allPersons.OrderBy(temp => temp.PersonName,
+                   StringComparer.OrdinalIgnoreCase).ToList(),
+                (nameof(PersonResponse.PersonName), SortOrderOptions.DESC)
+                => allPersons.OrderByDescending(temp => temp.PersonName,
+                   StringComparer.OrdinalIgnoreCase).ToList(),
+                //ignore the other attributes for now
+                _ => allPersons
+            };
+
+            return sortedPersons;
+        }
+
+        public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
+        {
+            if (personUpdateRequest == null) 
+            {
+                throw new ArgumentNullException(nameof(personUpdateRequest));
+            }
+
+            //validation
+            ValidationHelper.ModelValidation(personUpdateRequest);
+
+            //get matching person object to update
+            Person? matchingPerson = _persons.FirstOrDefault(temp => temp.PersonID == personUpdateRequest.PersonID);
+
+            if (matchingPerson == null) 
+            {
+                throw new ArgumentException("Given persin id doesn't exist");
+            }
+
+            //update all details
+            matchingPerson.PersonName = personUpdateRequest.PersonName;
+            matchingPerson.Email = personUpdateRequest.Email;
+            matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
+            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.CountryID = personUpdateRequest.CountryID;
+            matchingPerson.Address  = personUpdateRequest.Address;
+            matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+
+            return matchingPerson.ToPersonResponse();
         }
     }
 }

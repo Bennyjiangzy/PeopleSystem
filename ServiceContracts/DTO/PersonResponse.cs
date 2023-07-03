@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Emtities;
+using ServiceContracts.Enums;
 
 namespace ServiceContracts.DTO
 {
@@ -55,6 +56,20 @@ namespace ServiceContracts.DTO
                 $"Email: {Email}, Date of Birth: {DateOfBirth?.ToString("dd MM yyyy")}," +
                 $"Gender: {Gender}, Country ID: {CountryID}, Country: {Country}," +
                 $"Receive News Letters: {ReceiveNewsLetters}";
+        }
+
+        public PersonUpdateRequest ToPersonUpdateRequest() 
+        {
+            return new PersonUpdateRequest()
+            {
+                PersonID = PersonID,
+                PersonName = PersonName,
+                Email = Email,
+                DateOfBirth = DateOfBirth,
+                Gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender!, true),
+                Address = Address,
+                ReceiveNewsLetters = ReceiveNewsLetters,
+            };
         }
     }
 
